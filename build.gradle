@@ -1,6 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id "com.github.node-gradle.node" version "2.2.4"
 	id 'java'
 }
 
@@ -16,16 +17,46 @@ configurations {
 
 repositories {
 	mavenCentral()
+	jcenter()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// lombok
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// database
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	runtimeOnly 'com.h2database:h2'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+// npm install
+task appNpmInstall(type: NpmTask) {
+	workingDir = file("${project.projectDir}/front-end")
+	args = ["install"]
+}
+
+// npm build
+task npmBuild(type: NpmTask) {
+	workingDir = file("${project.projectDir}/front-end")
+	args = ["run", "build"]
+}
+
+// 빌드된 결과 이동
+task copyWebApp(type: Copy) {
+	from "front-end/build"
+	into 'build/resources/main/static/'
+}
+
+npmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn npmBuild
+compileJava.dependsOn copyWebApp
 
 test {
 	useJUnitPlatform()
