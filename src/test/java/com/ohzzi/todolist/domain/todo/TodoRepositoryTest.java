@@ -27,13 +27,11 @@ class TodoRepositoryTest {
     void Todo_저장_불러오기() {
         //given
         LocalDate date = LocalDate.now();
-        LocalDate endDate = LocalDate.now().plusDays(2);
         String title = "title";
 
         todoRepository.save(Todo.builder()
                 .title(title)
                 .date(date)
-                .endDate(endDate)
                 .isImportant(false)
                 .activated(false)
                 .build());
@@ -45,7 +43,6 @@ class TodoRepositoryTest {
         Todo todo = todoList.get(0);
         assertThat(todo.getTitle()).isEqualTo(title);
         assertThat(todo.getDate()).isEqualTo(date);
-        assertThat(todo.getEndDate()).isEqualTo(endDate);
         assertThat(todo.isImportant()).isEqualTo(false);
         assertThat(todo.isActivated()).isEqualTo(false);
     }
