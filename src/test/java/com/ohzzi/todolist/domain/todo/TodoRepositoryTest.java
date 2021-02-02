@@ -1,6 +1,5 @@
 package com.ohzzi.todolist.domain.todo;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class TodoRepositoryTest {
@@ -33,7 +31,6 @@ class TodoRepositoryTest {
                 .title(title)
                 .date(date)
                 .isImportant(false)
-                .activated(false)
                 .build());
 
         //when
