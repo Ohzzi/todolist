@@ -25,10 +25,10 @@ class TodoRepositoryTest {
     void Todo_저장_불러오기() {
         //given
         LocalDate date = LocalDate.now();
-        String title = "title";
+        String content = "content";
 
         todoRepository.save(Todo.builder()
-                .title(title)
+                .content(content)
                 .date(date)
                 .isImportant(false)
                 .build());
@@ -38,7 +38,7 @@ class TodoRepositoryTest {
 
         //then
         Todo todo = todoList.get(0);
-        assertThat(todo.getTitle()).isEqualTo(title);
+        assertThat(todo.getContent()).isEqualTo(content);
         assertThat(todo.getDate()).isEqualTo(date);
         assertThat(todo.isImportant()).isEqualTo(false);
         assertThat(todo.isActivated()).isEqualTo(false);
