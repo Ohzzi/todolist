@@ -11,20 +11,20 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class TodoSaveRequestDto {
 
-    private String title;
+    private String content;
     private LocalDate date;
     private Boolean isImportant;
 
     @Builder
-    public TodoSaveRequestDto(String title, LocalDate date, Boolean isImportant) {
-        this.title = title;
+    public TodoSaveRequestDto(String content, LocalDate date, Boolean isImportant) {
+        this.content = content;
         this.date = date;
         this.isImportant = isImportant;
     }
 
     public Todo ToEntity() {
         return Todo.builder()
-                .title(title)
+                .content(content)
                 .date(date)
                 .isImportant(isImportant)
                 .build();
