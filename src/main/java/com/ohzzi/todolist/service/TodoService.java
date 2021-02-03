@@ -35,4 +35,12 @@ public class TodoService {
         return id;
     }
 
+    @Transactional
+    public Long deleteTodo(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 할일이 존재하지 않습니다."));
+        todoRepository.delete(todo);
+        return id;
+    }
+
 }

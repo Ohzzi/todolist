@@ -1,6 +1,5 @@
 package com.ohzzi.todolist.controller;
 
-import com.ohzzi.todolist.controller.dto.TodoResponseDto;
 import com.ohzzi.todolist.controller.dto.TodoSaveRequestDto;
 import com.ohzzi.todolist.controller.dto.TodoUpdateRequestDto;
 import com.ohzzi.todolist.domain.todo.Todo;
@@ -126,5 +125,28 @@ class TodoControllerTest {
         assertThat(updatedTodo.isImportant()).isEqualTo(false);
         assertThat(updatedTodo.isActivated()).isEqualTo(true);
 
+    }
+
+    @Test
+    void Todo_삭제() {
+        // given
+        String content = "content";
+        LocalDate date = LocalDate.now();
+        Todo savedTodo = todoRepository.save(Todo.builder()
+                .content(content)
+                .date(date)
+                .isImportant(true)
+                .build());
+
+        long id = savedTodo.getId();
+        String url = "http://localhost:" + port + "/api/todo/" + id;
+
+        // when
+        testRestTemplate.delete(url);
+
+        // then
+
+        List<Todo> all = todoRepository.findAll();
+        assertThat(all.size()).isEqualTo(0);
     }
 }
