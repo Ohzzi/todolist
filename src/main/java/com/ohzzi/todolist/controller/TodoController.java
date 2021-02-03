@@ -13,17 +13,17 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    @PostMapping("/api/v1/todo")
+    @PostMapping("/api/todo")
     public Long saveTodo(@RequestBody TodoSaveRequestDto dto) {
         return todoService.saveTodo(dto);
     }
 
-    @GetMapping("/api/v1/todo/{id}")
+    @GetMapping("/api/todo/{id}")
     public TodoResponseDto getTodo(@PathVariable Long id) {
         return todoService.getTodo(id);
     }
 
-    @PutMapping("/api/v1/todo/{id}")
+    @PutMapping("/api/todo/{id}")
     public Long UpdateTodo(@PathVariable Long id, @RequestBody TodoUpdateRequestDto dto) {
         return todoService.updateTodo(id, dto);
     }

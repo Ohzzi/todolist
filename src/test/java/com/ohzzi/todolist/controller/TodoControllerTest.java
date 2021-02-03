@@ -44,7 +44,7 @@ class TodoControllerTest {
                 .isImportant(true)
                 .build();
 
-        String url = "http://localhost:" + port + "/api/v1/todo";
+        String url = "http://localhost:" + port + "/api/todo";
 
         // when
         ResponseEntity<Long> responseEntity = testRestTemplate.postForEntity(url, requestDto, Long.class);
@@ -74,7 +74,7 @@ class TodoControllerTest {
         long id = savedTodo.getId();
 
         // when
-        String url = "http://localhost:" + port + "/api/v1/todo/" + id;
+        String url = "http://localhost:" + port + "/api/todo/" + id;
 
         ResponseEntity<String> responseEntity = testRestTemplate.getForEntity(url, String.class);
 
@@ -111,7 +111,7 @@ class TodoControllerTest {
 
         HttpEntity<TodoUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
 
-        String url = "http://localhost:" + port + "/api/v1/todo/" + id;
+        String url = "http://localhost:" + port + "/api/todo/" + id;
 
         // when
         ResponseEntity<Long> responseEntity
