@@ -1,5 +1,6 @@
 package com.ohzzi.todolist.domain.todo;
 
+import com.ohzzi.todolist.controller.dto.TodoUpdateRequestDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,5 +29,11 @@ public class Todo {
         this.date = date;
         this.isImportant = isImportant;
         this.isActivated = isActivated;
+    }
+
+    public void update(TodoUpdateRequestDto requestDto) {
+        this.content = requestDto.getContent();
+        this.isImportant = requestDto.getIsImportant();
+        this.isActivated = requestDto.getIsActivated();
     }
 }

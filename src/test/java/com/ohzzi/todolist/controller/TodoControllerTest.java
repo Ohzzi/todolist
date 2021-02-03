@@ -5,17 +5,13 @@ import com.ohzzi.todolist.controller.dto.TodoSaveRequestDto;
 import com.ohzzi.todolist.controller.dto.TodoUpdateRequestDto;
 import com.ohzzi.todolist.domain.todo.Todo;
 import com.ohzzi.todolist.domain.todo.TodoRepository;
-import org.apache.coyote.Response;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -91,5 +87,44 @@ class TodoControllerTest {
         assertThat(body).contains(date.toString());
         assertThat(body).contains("\"isImportant\":true");
         assertThat(body).contains("\"isActivated\":false");
+    }
+
+    @Test
+    void Todo_수정() {
+        // given
+        String content = "content";
+        LocalDate date = LocalDate.now();
+        Todo savedTodo = todoRepository.save(Todo.builder()
+                .content(content)
+                .date(date)
+                .isImportant(true)
+                .build());
+
+        Long id = savedTodo.getId();
+        String expectedContent = "updated content";
+
+        TodoUpdateRequestDto requestDto = TodoUpdateRequestDto.builder()
+                .content(expectedContent)
+                .isImportant(false)
+                .isActivated(true)
+                .build();
+
+        HttpEntity<TodoUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
+
+        String url = "http://localhost:" + port + "/api/v1/todo/" + id;
+
+        // when
+        ResponseEntity<Long> responseEntity
+                = testRestTemplate.exchange(url, HttpMethod.PUT, requestEntity, Long.class);
+
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(responseEntity.getBody()).isGreaterThan(0L);
+
+        Todo updatedTodo = todoRepository.findById(id).orElseGet(() -> fail(""));
+
+        assertThat(updatedTodo.getContent()).isEqualTo(expectedContent);
+        assertThat(updatedTodo.isImportant()).isEqualTo(false);
+        assertThat(updatedTodo.isActivated()).isEqualTo(true);
+
     }
 }

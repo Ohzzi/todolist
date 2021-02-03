@@ -2,6 +2,7 @@ package com.ohzzi.todolist.service;
 
 import com.ohzzi.todolist.controller.dto.TodoResponseDto;
 import com.ohzzi.todolist.controller.dto.TodoSaveRequestDto;
+import com.ohzzi.todolist.controller.dto.TodoUpdateRequestDto;
 import com.ohzzi.todolist.domain.todo.Todo;
 import com.ohzzi.todolist.domain.todo.TodoRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,14 @@ public class TodoService {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 할일이 존재하지 않습니다."));
         return new TodoResponseDto(todo);
+    }
+
+    @Transactional
+    public Long updateTodo(Long id, TodoUpdateRequestDto dto) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 할일이 존재하지 않습니다."));
+        todo.update(dto);
+        return id;
     }
 
 }

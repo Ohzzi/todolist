@@ -2,6 +2,7 @@ package com.ohzzi.todolist.controller;
 
 import com.ohzzi.todolist.controller.dto.TodoResponseDto;
 import com.ohzzi.todolist.controller.dto.TodoSaveRequestDto;
+import com.ohzzi.todolist.controller.dto.TodoUpdateRequestDto;
 import com.ohzzi.todolist.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,4 +22,10 @@ public class TodoController {
     public TodoResponseDto getTodo(@PathVariable Long id) {
         return todoService.getTodo(id);
     }
+
+    @PutMapping("/api/v1/todo/{id}")
+    public Long UpdateTodo(@PathVariable Long id, @RequestBody TodoUpdateRequestDto dto) {
+        return todoService.updateTodo(id, dto);
+    }
+
 }
