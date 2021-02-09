@@ -16,6 +16,7 @@ const Contents = styled.div`
   margin-bottom: 32px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 function ContentsBox({ children }) {
