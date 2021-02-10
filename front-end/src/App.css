@@ -1,6 +1,11 @@
 @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+html {
+    height: 100%;
+}
+
 body {
+    height: 100%;
     background: lightgray;
     padding: 0;
     margin: 0;
