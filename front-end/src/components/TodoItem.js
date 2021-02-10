@@ -26,6 +26,9 @@ const TodoItemBlock = styled.div`
       display: initial;
     }
   }
+  .important {
+    color: red !important;
+  }
 `;
 
 const CheckCircle = styled.div`
@@ -52,17 +55,22 @@ const Text = styled.div`
   font-size: 21px;
   color: #495057;
   ${props =>
+    props.important &&
+    css`
+      color: red;
+    `}
+  ${props =>
     props.done &&
     css`
       color: #ced4da;
     `}
 `;
 
-function TodoItem({ id, done, text }) {
+function TodoItem({ id, done, text, important }) {
   return (
     <TodoItemBlock>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
-      <Text done={done}>{text}</Text>
+      <Text done={done} important={important}>{text}</Text>
       <Remove>
         <MdDelete />
       </Remove>
