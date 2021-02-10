@@ -34,8 +34,9 @@
 }
 
 .example-custom-input {
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 700;
+  color: mediumaquamarine;
 }
 
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
@@ -594,7 +595,7 @@
 .react-datepicker__month-text--keyboard-selected:hover,
 .react-datepicker__quarter-text--keyboard-selected:hover,
 .react-datepicker__year-text--keyboard-selected:hover {
-  background-color: orange;
+  background-color: mediumaquamarine;
 }
 
 .react-datepicker__day--in-selecting-range ,
