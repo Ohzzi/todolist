@@ -1,6 +1,20 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { MdDone, MdDelete } from 'react-icons/md';
+import { MdDone, MdDelete, MdUpdate } from 'react-icons/md';
+
+const Update = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dee2e6;
+  font-size: 24px;
+  padding: 8px;
+  cursor: pointer;
+  &:hover {
+    color: #ff6b6b;
+  }
+  display: none;
+`;
 
 const Remove = styled.div`
   display: flex;
@@ -22,6 +36,9 @@ const TodoItemBlock = styled.div`
   padding-top: 12px;
   padding-bottom: 12px;
   &:hover {
+    ${Update} {
+      display: initial;
+    }
     ${Remove} {
       display: initial;
     }
@@ -71,6 +88,9 @@ function TodoItem({ id, done, text, important }) {
     <TodoItemBlock>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done} important={important}>{text}</Text>
+      <Update>
+        <MdUpdate />
+      </Update>
       <Remove>
         <MdDelete />
       </Remove>

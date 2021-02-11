@@ -2,6 +2,7 @@ import React from 'react';
 import ContentsBox from './components/ContentsBox';
 import TodoHeader from './components/TodoHeader';
 import TodoList from './components/TodoList';
+import TodoCreate from './components/TodoCreate';
 
 import './App.css';
 
@@ -12,6 +13,7 @@ function App() {
       <ContentsBox>
         <TodoHeader />
         <TodoList />
+        <TodoCreate />
       </ContentsBox>
     </>
   );
