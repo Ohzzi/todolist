@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { ko } from "date-fns/esm/locale";
 
 import '../react-datepicker.css';
+import '../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 const Header = styled.div`
   align-content: center;
