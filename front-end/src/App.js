@@ -1,8 +1,7 @@
 import React from 'react';
-import ContentsBox from './components/ContentsBox';
-import TodoHeader from './components/TodoHeader';
-import TodoList from './components/TodoList';
-import TodoCreate from './components/TodoCreate';
+import { Route } from 'react-router-dom';
+import Home from './components/Home';
+import Todo from './components/Todo';
 
 import './App.css';
 
@@ -10,11 +9,8 @@ function App() {
 
   return (
     <>
-      <ContentsBox>
-        <TodoHeader />
-        <TodoList />
-        <TodoCreate />
-      </ContentsBox>
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/todolist" exact={true} component={Todo} />
     </>
   );
 }
