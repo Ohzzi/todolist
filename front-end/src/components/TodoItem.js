@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdUpdate } from 'react-icons/md';
+import TodoUpdate from './TodoUpdate';
 
 const Update = styled.div`
   display: flex;
@@ -84,17 +85,24 @@ const Text = styled.div`
 `;
 
 function TodoItem({ id, done, text, important }) {
+  const [updatable, setUpdatable] = useState(false);
+
+  const UpdateHandler = () => setUpdatable(!updatable);
+
   return (
+    <>
     <TodoItemBlock>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done} important={important}>{text}</Text>
-      <Update>
+      <Update onClick={UpdateHandler}>
         <MdUpdate />
       </Update>
       <Remove>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
+    <TodoUpdate text={text} open={updatable}/>
+    </>
   );
 }
 
