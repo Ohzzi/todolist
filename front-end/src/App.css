@@ -1,13 +1,13 @@
 @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    height: 100%;
-    background: lightgray;
-    padding: 0;
-    margin: 0;
-    font-family: "Noto Sans KR";
+  height: 100%;
+  background: darkseagreen;
+  padding: 0;
+  margin: 0;
+  font-family: "Noto Sans KR";
 }

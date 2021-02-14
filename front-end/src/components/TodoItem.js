@@ -31,7 +31,7 @@ const Remove = styled.div`
 `;
 
 const TodoItemBlock = styled.div`
-  margin: 16px;
+  margin: 8px 16px;
   display: flex;
   align-items: center;
   padding-top: 12px;

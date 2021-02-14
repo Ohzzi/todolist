@@ -6,10 +6,10 @@ const InsertForm = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-left: 32px;
-  padding-top: 32px;
-  padding-right: 32px;
-  padding-bottom: 32px;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-right: 24px;
+  padding-bottom: 16px;
 
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
