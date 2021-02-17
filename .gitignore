@@ -36,3 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 front-end/.eslintcache
+
+### OAuth2 settings ###
+application-oauth.properties
