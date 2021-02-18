@@ -2,21 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Header = styled.div`
+  margin: 24px;
   align-content: center;
   padding: 5%;
 `;
 
-function TodoHeader() {
+const TextBlock = styled.div`
+  font-size: 72px;
+  font-weight: 700;
+  color: mediumaquamarine;
+`
+
+function HomeHeader() {
   return (
     <>
     <Header>
-      환영합니다!
+      <TextBlock>
+        Todolist
+      </TextBlock>
     </Header>
-    <a href="/todolist">
-      이동
-    </a>
     </>
   );
 }
 
-export default TodoHeader;
+export default HomeHeader;
