@@ -1,6 +1,7 @@
 package com.ohzzi.todolist.controller.dto;
 
 import com.ohzzi.todolist.domain.todo.Todo;
+import com.ohzzi.todolist.domain.user.User;
 import lombok.Getter;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class TodoResponseDto {
     private final LocalDate date;
     private final Boolean isImportant;
     private final Boolean isActivated;
+    private final User user;
 
     public TodoResponseDto(Todo entity) {
         this.id = entity.getId();
@@ -20,5 +22,6 @@ public class TodoResponseDto {
         this.date = entity.getDate();
         this.isImportant = entity.isImportant();
         this.isActivated = entity.isActivated();
+        this.user = entity.getUser();
     }
 }
