@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 /* URL 별 유저의 권한을 지정한다. */
                 .authorizeRequests()
                 .antMatchers("/todolist").authenticated()
-                .antMatchers("/api/v1/**").hasRole(Role.
+                .antMatchers("/api/**").hasRole(Role.
                 USER.name())
                 .anyRequest().permitAll()
                 //.anyRequest().authenticated() // 설정된 값 이외의 나머지 URL 들(anyRequest)을 인증된 사용자에게만 허용(authenticated)
