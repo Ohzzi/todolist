@@ -1,21 +1,25 @@
 package com.ohzzi.todolist.domain.user;
 
+import com.ohzzi.todolist.domain.todo.Todo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 사용자의 이름, 이메일 등 정보를 저장하는 Entity 클래스
  */
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private Long id;
 
     @Column(nullable = false)
@@ -23,6 +27,9 @@ public class User {
 
     @Column(nullable = false)
     private String email;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private final List<Todo> todos = new ArrayList<>();
 
     /**
      * Enum 값을 DB에 저장할때 Enum 순서에 따라 int 로 저장하기 때문에(ORDINAL)
