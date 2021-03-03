@@ -7,14 +7,17 @@ import '../../react-datepicker.css';
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css';
 
 const Header = styled.div`
-  align-content: center;
+  width: 80%;
+  text-align: center;
   padding: 5%;
-  .tasks-left {
+  .logout {
     color: #20c997;
     font-size: 18px;
     margin-top: 20px;
+    margin-right: 20px;
     font-weight: bold;
-    text-align: center;
+    text-align: right;
+    cursor: pointer;
   }
   border-bottom: 2px solid #e9ecef;
 `
@@ -41,13 +44,13 @@ function TodoHeader() {
     });
 
     return `${month.substr(0, month.length - 1)}/${day.substr(0, day.length - 1)}`;
-  }
+  };
 
   const getDayName = (date) => {
     return date.toLocaleDateString('ko-KR', {
       weekday: 'long',
     }).substr(0, 1);
-  }
+  };
 
   const createDate = (date) => {
     return new Date(new Date(date.getFullYear()
@@ -56,7 +59,11 @@ function TodoHeader() {
       , 0
       , 0
       , 0));
-  }
+  };
+
+  const handleLogout = () => {
+    document.location.href = "/logout";
+  };
 
   return (
     <Header>
@@ -79,7 +86,7 @@ function TodoHeader() {
             getDayName(createDate(date)) === '일' ? "sunday" : undefined
         }
       />
-      <div className="tasks-left">할 일 2개 남음</div>
+      <div className="logout" onClick={handleLogout}>Logout</div>
     </Header>
   );
 };

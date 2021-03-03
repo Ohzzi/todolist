@@ -13,7 +13,7 @@ const TodoListBlock = styled.div`
 function TodoList() {
   return <TodoListBlock>
     <TodoItem text="할 일 1" done={true} />
-    <TodoItem text="할 일 2" done={true} />
+    <TodoItem text="할 일 2" done={true} important={true} />
     <TodoItem text="할 일 3" done={false} important={true} />
     <TodoItem text="할 일 4" done={false} />
     <TodoItem text="할 일 5" done={false} />

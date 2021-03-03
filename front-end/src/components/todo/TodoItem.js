@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled, { css } from 'styled-components';
-import { MdDone, MdDelete, MdUpdate } from 'react-icons/md';
+import { MdDelete, MdUpdate } from 'react-icons/md';
 import TodoUpdate from './TodoUpdate';
 
 const Update = styled.div`
@@ -34,6 +34,8 @@ const TodoItemBlock = styled.div`
   margin: 8px 16px;
   display: flex;
   align-items: center;
+  padding-left: 24px;
+  padding-right: 24px;
   padding-top: 12px;
   padding-bottom: 12px;
   &:hover {
@@ -49,25 +51,6 @@ const TodoItemBlock = styled.div`
   }
 `;
 
-const CheckCircle = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-  border: 1px solid #ced4da;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
-  cursor: pointer;
-  ${props =>
-    props.done &&
-    css`
-      border: 1px solid #38d9a9;
-      color: #38d9a9;
-    `}
-`;
-
 const Text = styled.div`
   flex: 1;
   font-size: 21px;
@@ -81,6 +64,7 @@ const Text = styled.div`
     props.done &&
     css`
       color: #ced4da;
+      text-decoration: line-through;
     `}
 `;
 
@@ -92,7 +76,6 @@ function TodoItem({ id, done, text, important }) {
   return (
     <>
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
       <Text done={done} important={important}>{text}</Text>
       <Update onClick={UpdateHandler}>
         <MdUpdate />
