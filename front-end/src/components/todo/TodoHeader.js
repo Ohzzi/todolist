@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import { ko } from "date-fns/esm/locale";
+import { TodoStateContext } from '../../context/TodoContext';
 
 import '../../react-datepicker.css';
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -10,9 +11,17 @@ const Header = styled.div`
   width: 80%;
   text-align: center;
   padding: 5%;
-  .logout {
+  .tasks-left {
     color: #20c997;
     font-size: 18px;
+    margin-top: 20px;
+    margin-right: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .logout {
+    color: #20c997;
+    font-size: 14px;
     margin-top: 20px;
     margin-right: 20px;
     font-weight: bold;
@@ -65,6 +74,9 @@ function TodoHeader() {
     document.location.href = "/logout";
   };
 
+  const todos = useContext(TodoStateContext);
+  const undoneTasks = todos.filter(todo => !todo.done);
+
   return (
     <Header>
       <DatePicker
@@ -86,6 +98,7 @@ function TodoHeader() {
             getDayName(createDate(date)) === '일' ? "sunday" : undefined
         }
       />
+      <div className="tasks-left">할 일 {undoneTasks.length}개 남음</div>
       <div className="logout" onClick={handleLogout}>Logout</div>
     </Header>
   );

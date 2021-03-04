@@ -2,6 +2,7 @@ import React from 'react';
 import TodoHeader from './todo/TodoHeader';
 import TodoList from './todo/TodoList';
 import TodoCreate from './todo/TodoCreate';
+import { TodoProvider } from '../context/TodoContext';
 import axios from 'axios';
 
 function Todo() {
@@ -15,11 +16,11 @@ function Todo() {
     console.log(user);
   });
   return (
-    <>
+    <TodoProvider>
       <TodoHeader />
       <TodoList />
       <TodoCreate />
-    </>
+    </TodoProvider>
   );
 };
 
