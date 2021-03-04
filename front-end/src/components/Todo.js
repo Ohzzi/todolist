@@ -3,24 +3,17 @@ import TodoHeader from './todo/TodoHeader';
 import TodoList from './todo/TodoList';
 import TodoCreate from './todo/TodoCreate';
 import { TodoProvider } from '../context/TodoContext';
-import axios from 'axios';
+import { UserProvider } from '../context/UserContext';
 
 function Todo() {
-  let user;
-  axios.get('/api/user')
-  .then(({data}) => {
-    user = {
-      name: data.name,
-      email: data.email,
-    };
-    console.log(user);
-  });
   return (
-    <TodoProvider>
-      <TodoHeader />
-      <TodoList />
-      <TodoCreate />
-    </TodoProvider>
+    <UserProvider>
+      <TodoProvider>
+        <TodoHeader />
+        <TodoList />
+        <TodoCreate />
+      </TodoProvider>
+    </UserProvider>
   );
 };
 

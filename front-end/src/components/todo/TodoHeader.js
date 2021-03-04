@@ -1,8 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import { ko } from "date-fns/esm/locale";
 import { TodoStateContext } from '../../context/TodoContext';
+import { UserStateContext, UserDispatchContext, getUser } from '../../context/UserContext';
+import axios from 'axios';
 
 import '../../react-datepicker.css';
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -71,11 +73,24 @@ function TodoHeader() {
   };
 
   const handleLogout = () => {
+    userDispatch({
+      type: 'LOGOUT'
+    });
     document.location.href = "/logout";
   };
 
   const todos = useContext(TodoStateContext);
   const undoneTasks = todos.filter(todo => !todo.done);
+  const state = useContext(UserStateContext);
+  const userDispatch = useContext(UserDispatchContext);
+
+  useEffect(() => {
+    getUser(userDispatch);
+    console.log(state.name);
+    return () => {};
+  }, []);
+
+  let textValue = `${state.name || ""}의 할 일 ${undoneTasks.length}개 남음`;
 
   return (
     <Header>
