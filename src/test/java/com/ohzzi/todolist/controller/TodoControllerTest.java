@@ -64,7 +64,7 @@ class TodoControllerTest {
 
     @Test
     @WithMockUser
-    void todo_등록() throws Exception{
+    void todo_등록() throws Exception {
         // given
         String userEmail = "user@google.com";
         String userName = "유저";
@@ -105,7 +105,7 @@ class TodoControllerTest {
 
     @Test
     @WithMockUser()
-    void Todo_조회() throws Exception{
+    void Todo_조회() throws Exception {
         // given
         String userEmail = "user@google.com";
         String userName = "유저";
@@ -137,6 +137,7 @@ class TodoControllerTest {
 
         String body = result.getResponse().getContentAsString();
 
+        // then
         assertThat(body).contains(content);
         assertThat(body).contains(date.toString());
         assertThat(body).contains("\"isImportant\":true");
@@ -194,7 +195,7 @@ class TodoControllerTest {
 
     @Test
     @WithMockUser
-    void Todo_삭제() throws Exception{
+    void Todo_삭제() throws Exception {
         // given
         String userEmail = "user@google.com";
         String userName = "유저";
@@ -224,5 +225,67 @@ class TodoControllerTest {
         // then
         List<Todo> all = todoRepository.findAll();
         assertThat(all.size()).isEqualTo(0);
+    }
+
+    @Test
+    @WithMockUser
+    void User의_Todo_모두_찾기() throws Exception {
+        // given
+        String userEmail = "user@google.com";
+        String userName = "유저";
+        User user = User.builder()
+                .email(userEmail)
+                .name(userName)
+                .role(Role.USER)
+                .build();
+        userRepository.save(user);
+
+        User anotherUser = User.builder()
+                .email("user@naver.com")
+                .name(userName)
+                .role(Role.USER)
+                .build();
+        userRepository.save(anotherUser);
+
+        String content = "content";
+        LocalDate date = LocalDate.now();
+        String dateString = date.toString();
+        Todo savedTodo = todoRepository.save(Todo.builder()
+                .content(content)
+                .date(date)
+                .isImportant(true)
+                .user(user)
+                .build());
+
+        Todo savedTodo2 = todoRepository.save(Todo.builder()
+                .content(content)
+                .date(date)
+                .isImportant(false)
+                .user(user)
+                .build());
+
+        Todo savedTodo3 = todoRepository.save(Todo.builder()
+                .content(content)
+                .date(date)
+                .isImportant(false)
+                .user(anotherUser)
+                .build());
+
+        String url = "http://localhost:" + port + "/api/todos/" + userEmail + "/" + dateString;
+
+        // when
+        MvcResult result = mvc.perform(get(url)
+                .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andReturn();
+        String body = result.getResponse().getContentAsString();
+
+        // then
+        System.out.println(result.getResponse());
+        System.out.println(body);
+        assertThat(body).contains(content);
+        assertThat(body).contains(date.toString());
+        assertThat(body).contains("\"isImportant\":true");
+        assertThat(body).contains("\"isActivated\":false");
     }
 }

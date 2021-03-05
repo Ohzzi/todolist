@@ -1,5 +1,7 @@
 package com.ohzzi.todolist.domain.todo;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.ohzzi.todolist.controller.dto.TodoUpdateRequestDto;
 import com.ohzzi.todolist.domain.user.User;
 import lombok.AccessLevel;
@@ -15,6 +17,7 @@ import static javax.persistence.FetchType.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Todo {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

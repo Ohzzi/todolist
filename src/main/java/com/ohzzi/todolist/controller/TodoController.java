@@ -7,6 +7,8 @@ import com.ohzzi.todolist.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class TodoController {
@@ -31,6 +33,11 @@ public class TodoController {
     @DeleteMapping("/api/todo/{id}")
     public Long deleteTodo(@PathVariable Long id) {
         return todoService.deleteTodo(id);
+    }
+
+    @GetMapping("/api/todos/{userEmail}/{date}")
+    public List<TodoResponseDto> getTodoByUser(@PathVariable String userEmail, @PathVariable String date) {
+        return todoService.getTodoByUser(userEmail, date);
     }
 
 }
