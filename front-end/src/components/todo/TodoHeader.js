@@ -2,9 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
 import { ko } from "date-fns/esm/locale";
-import { TodoStateContext } from '../../context/TodoContext';
-import { UserStateContext, UserDispatchContext, getUser } from '../../context/UserContext';
-import axios from 'axios';
+import { fetchTodos, useTodoDispatch, useTodoState } from '../../context/TodoContext';
+import { useUserState, useUserDispatch, getUser } from '../../context/UserContext';
+import { useDateState, useDateDispatch } from '../../context/DateContext';
 
 import '../../react-datepicker.css';
 import '../../../node_modules/react-datepicker/dist/react-datepicker.css';
@@ -45,18 +45,6 @@ function TodoHeader() {
     </CustomDiv>
   );
 
-  const getFormattedDate = (date) => {
-    const month = date.toLocaleDateString('ko-KR', {
-      month: 'long',
-    });
-
-    const day = date.toLocaleDateString('ko-KR', {
-      day: 'numeric',
-    });
-
-    return `${month.substr(0, month.length - 1)}/${day.substr(0, day.length - 1)}`;
-  };
-
   const getDayName = (date) => {
     return date.toLocaleDateString('ko-KR', {
       weekday: 'long',
@@ -79,18 +67,19 @@ function TodoHeader() {
     document.location.href = "/logout";
   };
 
-  const todos = useContext(TodoStateContext);
+  const todos = useTodoState();
+  const todoDispatch = useTodoDispatch();
   const undoneTasks = todos.filter(todo => !todo.done);
-  const state = useContext(UserStateContext);
-  const userDispatch = useContext(UserDispatchContext);
+  const userState = useUserState();
+  const userDispatch = useUserDispatch();
+  const dateState = useDateState();
+  const dateDispatch = useDateDispatch();
 
   useEffect(() => {
     getUser(userDispatch);
-    console.log(state.name);
+    console.log(userState);
     return () => {};
   }, []);
-
-  let textValue = `${state.name || ""}의 할 일 ${undoneTasks.length}개 남음`;
 
   return (
     <Header>
@@ -98,7 +87,16 @@ function TodoHeader() {
         locale={ko}
         selected={startDate}
         dateFormat="yyyy.MM.dd(eee)"
-        onChange={date => setStartDate(date)}
+        onChange={date => {
+          dateDispatch({
+            type: 'UPDATE_DATE',
+            data: date.toJSON().substr(0,10)
+          });
+          console.log(date);
+          console.log(userState.data.email, dateState);
+          fetchTodos(todoDispatch, userState.data, dateState);
+          setStartDate(date);
+        }}
         customInput={<ExampleCustomInput />}
         minDate={new Date()}
         popperModifiers={{

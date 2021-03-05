@@ -1,4 +1,4 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer, createContext, useContext } from 'react';
 import axios from 'axios';
 
 const initialState = {
@@ -56,8 +56,8 @@ export async function getUser(dispatch) {
   }
 }
 
-export const UserStateContext = createContext();
-export const UserDispatchContext = createContext();
+const UserStateContext = createContext();
+const UserDispatchContext = createContext();
 
 export function UserProvider({ children }) {
   const [state, dispatch] = useReducer(userReducer, initialState);
@@ -68,4 +68,12 @@ export function UserProvider({ children }) {
       </UserDispatchContext.Provider>
     </UserStateContext.Provider>
   );
+}
+
+export function useUserState() {
+  return useContext(UserStateContext);
+}
+
+export function useUserDispatch() {
+  return useContext(UserDispatchContext);
 }

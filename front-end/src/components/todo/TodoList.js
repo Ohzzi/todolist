@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import TodoItem from './TodoItem';
-import { TodoStateContext } from '../../context/TodoContext';
-import axios from 'axios';
+import { useTodoState } from '../../context/TodoContext';
 
 const TodoListBlock = styled.div`
   flex: 1;
@@ -13,7 +12,7 @@ const TodoListBlock = styled.div`
 `;
 
 function TodoList() {
-  const todos = useContext(TodoStateContext);
+  const todos = useTodoState();
 
   return (
     <TodoListBlock>

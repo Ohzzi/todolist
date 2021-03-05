@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
+import { useTodoDispatch } from '../../context/TodoContext';
 
 const CircleButton = styled.button`
   background: #38d9a9;
@@ -98,10 +99,27 @@ const ImportantBtn = styled.div`
 function TodoCreate() {
   const [open, setOpen] = useState(false);
   const [importance, setImportance] = useState(false);
+  const [value, setValue] = useState('');
 
   const openHandler = () => setOpen(!open);
 
   const importanceHandler = () => setImportance(!importance);
+
+  const dispatch = useTodoDispatch();
+
+  const onSubmit = e => {
+    e.preventDefault(); // 새로고침 방지
+    dispatch({
+      type: 'CREATE',
+      todo: {
+        content: value,
+        done: false,
+        isImportant: importance,
+      }
+    });
+    setValue('');
+    setOpen(false);
+  };
 
   return (
     <>
@@ -120,4 +138,4 @@ function TodoCreate() {
   );
 }
 
-export default TodoCreate;
+export default React.memo(TodoCreate);

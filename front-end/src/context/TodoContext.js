@@ -1,11 +1,29 @@
-import React, { useReducer, createContext } from 'react';
+import React, { useReducer, createContext, useContext } from 'react';
+import axios from 'axios';
 
-const Todos = [{
+const todos = [{
   id: 1,
   content: '프로젝트 생성하기',
   done: false,
-  important: true,
+  isImportant: true,
 },];
+
+export async function fetchTodos(dispatch, user, date) {
+  try {
+    const response = await axios(`/api/todos/${user.email}/${date}`);
+    console.log(response);
+    dispatch({
+      type: 'FETCH',
+      data: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: 'FETCH',
+      data: [],
+    });
+  }
+}
 
 function todoReducer(state, action) {
   switch(action.type) {
@@ -17,16 +35,18 @@ function todoReducer(state, action) {
       );
     case 'REMOVE':
       return state.filter(todo => todo.id !== action.id);
+    case 'FETCH':
+      return action.data;
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
 }
 
-export const TodoStateContext = createContext();
-export const TodoDispatchContext = createContext();
+const TodoStateContext = createContext();
+const TodoDispatchContext = createContext();
 
 export function TodoProvider({ children }) {
-  const [state, dispatch] = useReducer(todoReducer, Todos);
+  const [state, dispatch] = useReducer(todoReducer, todos);
   return (
     <TodoStateContext.Provider value={state}>
       <TodoDispatchContext.Provider value={dispatch}>
@@ -34,4 +54,12 @@ export function TodoProvider({ children }) {
       </TodoDispatchContext.Provider>
     </TodoStateContext.Provider>
   );
+}
+
+export function useTodoState() {
+  return useContext(TodoStateContext);
+}
+
+export function useTodoDispatch() {
+  return useContext(TodoDispatchContext);
 }
