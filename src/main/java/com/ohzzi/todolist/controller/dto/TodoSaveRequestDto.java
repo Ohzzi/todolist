@@ -4,15 +4,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.ohzzi.todolist.domain.todo.Todo;
 import com.ohzzi.todolist.domain.user.User;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class TodoSaveRequestDto {
 
     private String content;
@@ -20,14 +19,6 @@ public class TodoSaveRequestDto {
     private LocalDate date;
     private Boolean isImportant;
     private User user;
-
-    @Builder
-    public TodoSaveRequestDto(String content, LocalDate date, Boolean isImportant, User user) {
-        this.content = content;
-        this.date = date;
-        this.isImportant = isImportant;
-        this.user = user;
-    }
 
     public Todo ToEntity() {
         return Todo.builder()

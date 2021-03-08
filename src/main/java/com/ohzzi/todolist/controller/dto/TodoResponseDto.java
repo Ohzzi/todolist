@@ -13,7 +13,7 @@ public class TodoResponseDto {
     private final String content;
     private final LocalDate date;
     private final Boolean isImportant;
-    private final Boolean isActivated;
+    private final Boolean isDone;
     private final User user;
 
     public TodoResponseDto(Todo entity) {
@@ -21,7 +21,7 @@ public class TodoResponseDto {
         this.content = entity.getContent();
         this.date = entity.getDate();
         this.isImportant = entity.isImportant();
-        this.isActivated = entity.isActivated();
+        this.isDone = entity.isDone();
         this.user = entity.getUser();
     }
 }
