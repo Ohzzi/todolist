@@ -20,6 +20,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
@@ -64,6 +65,7 @@ class TodoControllerTest {
 
     @Test
     @WithMockUser
+    @Transactional
     void todo_등록() throws Exception {
         // given
         String userEmail = "user@google.com";
@@ -98,13 +100,14 @@ class TodoControllerTest {
         assertThat(all.get(0).getContent()).isEqualTo(content);
         assertThat(all.get(0).getDate()).isEqualTo(date);
         assertThat(all.get(0).isImportant()).isEqualTo(true);
-        assertThat(all.get(0).isActivated()).isEqualTo(false);
+        assertThat(all.get(0).isDone()).isEqualTo(false);
         assertThat(all.get(0).getUser().getName()).isEqualTo(userName);
         assertThat(all.get(0).getUser().getEmail()).isEqualTo(userEmail);
     }
 
     @Test
     @WithMockUser()
+    @Transactional
     void Todo_조회() throws Exception {
         // given
         String userEmail = "user@google.com";
@@ -141,11 +144,12 @@ class TodoControllerTest {
         assertThat(body).contains(content);
         assertThat(body).contains(date.toString());
         assertThat(body).contains("\"isImportant\":true");
-        assertThat(body).contains("\"isActivated\":false");
+        assertThat(body).contains("\"isDone\":false");
     }
 
     @Test
     @WithMockUser
+    @Transactional
     void Todo_수정() throws Exception {
         // given
         String userEmail = "user@google.com";
@@ -172,7 +176,7 @@ class TodoControllerTest {
         TodoUpdateRequestDto requestDto = TodoUpdateRequestDto.builder()
                 .content(expectedContent)
                 .isImportant(false)
-                .isActivated(true)
+                .isDone(true)
                 .build();
 
         String url = "http://localhost:" + port + "/api/todo/" + id;
@@ -188,7 +192,7 @@ class TodoControllerTest {
 
         assertThat(updatedTodo.getContent()).isEqualTo(expectedContent);
         assertThat(updatedTodo.isImportant()).isEqualTo(false);
-        assertThat(updatedTodo.isActivated()).isEqualTo(true);
+        assertThat(updatedTodo.isDone()).isEqualTo(true);
         assertThat(updatedTodo.getUser().getName()).isEqualTo(userName);
         assertThat(updatedTodo.getUser().getEmail()).isEqualTo(userEmail);
     }
@@ -286,6 +290,6 @@ class TodoControllerTest {
         assertThat(body).contains(content);
         assertThat(body).contains(date.toString());
         assertThat(body).contains("\"isImportant\":true");
-        assertThat(body).contains("\"isActivated\":false");
+        assertThat(body).contains("\"isDone\":false");
     }
 }

@@ -41,6 +41,6 @@ class TodoRepositoryTest {
         assertThat(todo.getContent()).isEqualTo(content);
         assertThat(todo.getDate()).isEqualTo(date);
         assertThat(todo.isImportant()).isEqualTo(false);
-        assertThat(todo.isActivated()).isEqualTo(false);
+        assertThat(todo.isDone()).isEqualTo(false);
     }
 }
