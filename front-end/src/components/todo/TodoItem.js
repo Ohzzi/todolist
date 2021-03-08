@@ -63,9 +63,6 @@ const TodoItemBlock = styled.div`
       display: initial;
     }
   }
-  .important {
-    color: red !important;
-  }
 `;
 
 const Text = styled.div`
@@ -73,19 +70,19 @@ const Text = styled.div`
   font-size: 21px;
   color: #495057;
   ${props =>
-    props.important &&
+    props.isImportant &&
     css`
       color: red;
     `}
   ${props =>
-    props.done &&
+    props.isDone &&
     css`
       color: #ced4da;
       text-decoration: line-through;
     `}
 `;
 
-function TodoItem({ id, done, text, isImportant }) {
+function TodoItem({ id, isDone, text, isImportant }) {
   const [updatable, setUpdatable] = useState(false);
 
   const UpdateHandler = () => setUpdatable(!updatable);
@@ -98,7 +95,7 @@ function TodoItem({ id, done, text, isImportant }) {
   return (
     <>
     <TodoItemBlock>
-      <Text done={done} isImportant={isImportant}>{text}</Text>
+      <Text isDone={isDone} isImportant={isImportant}>{text}</Text>
       <Done onClick={onToggle}>
         <MdDone />
       </Done>

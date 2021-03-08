@@ -113,7 +113,7 @@ function TodoCreate() {
       type: 'CREATE',
       todo: {
         content: value,
-        done: false,
+        isDone: false,
         isImportant: importance,
       }
     });

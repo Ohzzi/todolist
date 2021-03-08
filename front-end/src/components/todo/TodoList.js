@@ -17,7 +17,7 @@ function TodoList() {
   return (
     <TodoListBlock>
       {todos.map(todo => (
-        <TodoItem key={todo.id} id={todo.id} text={todo.content} done={todo.done} important={todo.important} />
+        <TodoItem key={todo.id} id={todo.id} text={todo.content} isDone={todo.isDone} isImportant={todo.isImportant} />
       ))}
     </TodoListBlock>
   );
