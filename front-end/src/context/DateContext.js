@@ -6,10 +6,7 @@ const dateState = today.toJSON().substr(0,10);
 function dateReducer(state, action) {
   switch (action.type) {
     case 'UPDATE_DATE':
-      if (action.data) {
-        console.log(action.data);
-        return action.data;
-      } else break;
+      return action.data;
     default:
       throw new Error(`Unhanded action type: ${action.type}`);
   }

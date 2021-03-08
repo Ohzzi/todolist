@@ -1,12 +1,7 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import axios from 'axios';
 
-const todos = [{
-  id: 1,
-  content: '프로젝트 생성하기',
-  done: false,
-  isImportant: true,
-},];
+const todos = [];
 
 export async function fetchTodos(dispatch, user, date) {
   try {
@@ -29,9 +24,9 @@ function todoReducer(state, action) {
   switch(action.type) {
     case 'CREATE':
       return state.concat(action.todo);
-    case 'TOGGLE':
+    case 'TOGGLE': 
       return state.map(todo =>
-        todo.id === action.id ? { ...todo, done: !todo.done } : todo
+        todo.id === action.id ? { ...todo, isDone: !todo.isDone } : todo
       );
     case 'REMOVE':
       return state.filter(todo => todo.id !== action.id);

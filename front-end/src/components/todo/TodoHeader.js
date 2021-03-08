@@ -92,9 +92,7 @@ function TodoHeader() {
             type: 'UPDATE_DATE',
             data: date.toJSON().substr(0,10)
           });
-          console.log(date);
-          console.log(userState.data.email, dateState);
-          fetchTodos(todoDispatch, userState.data, dateState);
+          fetchTodos(todoDispatch, userState.data, date.toJSON().substr(0,10));
           setStartDate(date);
         }}
         customInput={<ExampleCustomInput />}
