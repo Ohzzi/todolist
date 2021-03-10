@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdAdd } from 'react-icons/md';
-import { useTodoDispatch } from '../../context/TodoContext';
+import { createTodo, useTodoDispatch } from '../../context/TodoContext';
+import { useUserState } from '../../context/UserContext';
+import { useDateState } from '../../context/DateContext';
 
 const CircleButton = styled.button`
   background: #38d9a9;
@@ -106,16 +108,16 @@ function TodoCreate() {
   const importanceHandler = () => setImportance(!importance);
 
   const dispatch = useTodoDispatch();
+  const userState = useUserState();
+  const dateState = useDateState();
 
   const onSubmit = e => {
     e.preventDefault(); // 새로고침 방지
-    dispatch({
-      type: 'CREATE',
-      todo: {
-        content: value,
-        isDone: false,
-        isImportant: importance,
-      }
+    createTodo(dispatch, {
+      content: value,
+      user: userState,
+      date: dateState,
+      isImportant: importance
     });
     setValue('');
     setOpen(false);
@@ -125,7 +127,7 @@ function TodoCreate() {
     <>
       {open && (
         <InsertFormPositioner>
-          <InsertForm>
+          <InsertForm onSubmit={onSubmit}>
             <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
             <ImportantBtn onClick={importanceHandler} importance={importance}>중요</ImportantBtn>
           </InsertForm>

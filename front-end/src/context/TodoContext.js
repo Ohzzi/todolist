@@ -3,6 +3,22 @@ import axios from 'axios';
 
 const todos = [];
 
+export async function createTodo(dispatch, data) {
+  try {
+    const response = await axios.post('/api/todo', data);
+    // TODO: HTTP 405 에러 발생
+    dispatch({
+      type: 'CREATE',
+      data: {
+        ...data,
+        id: response.data.id,
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function fetchTodos(dispatch, user, date) {
   try {
     const response = await axios(`/api/todos/${user.email}/${date}`);
