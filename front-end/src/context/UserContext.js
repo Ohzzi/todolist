@@ -44,15 +44,18 @@ function userReducer(state, action) {
   }
 }
 
-export async function getUser(dispatch) {
-  dispatch({ type: 'GET_USER' });
+export async function getUser(userDispatch, todoDispatch, dateState) {
+  userDispatch({ type: 'GET_USER' });
   try {
-    const response = await axios.get(
-      '/api/user'
-    );
-    dispatch({ type: 'GET_USER_SUCCESS', data: response.data });
+    const userResponse = await axios.get('/api/user');
+    userDispatch({ type: 'GET_USER_SUCCESS', data: userResponse.data });
+    const todoResponse = await axios.get(`/api/todos/${userResponse.data.email}/${dateState}`);
+    todoDispatch({
+      type: 'FETCH',
+      data: todoResponse.data
+    });
   } catch (e) {
-    dispatch({ type: 'GET_USER_ERROR', error: e });
+    userDispatch({ type: 'GET_USER_ERROR', error: e });
   }
 }
 

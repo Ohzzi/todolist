@@ -76,8 +76,7 @@ function TodoHeader() {
   const dateDispatch = useDateDispatch();
 
   useEffect(() => {
-    getUser(userDispatch);
-    console.log(userState);
+    getUser(userDispatch, todoDispatch, dateState);
     return () => {};
   }, []);
 
