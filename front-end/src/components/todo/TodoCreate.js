@@ -111,11 +111,13 @@ function TodoCreate() {
   const userState = useUserState();
   const dateState = useDateState();
 
+  const onChange = e => setValue(e.target.value);
+
   const onSubmit = e => {
     e.preventDefault(); // 새로고침 방지
     createTodo(dispatch, {
       content: value,
-      user: userState,
+      user: userState.data,
       date: dateState,
       isImportant: importance
     });
@@ -128,7 +130,7 @@ function TodoCreate() {
       {open && (
         <InsertFormPositioner>
           <InsertForm onSubmit={onSubmit}>
-            <Input autoFocus placeholder="할 일을 입력 후, Enter 를 누르세요" />
+            <Input autoFocus onChange={onChange} placeholder="할 일을 입력 후, Enter 를 누르세요" value={value} />
             <ImportantBtn onClick={importanceHandler} importance={importance}>중요</ImportantBtn>
           </InsertForm>
         </InsertFormPositioner>

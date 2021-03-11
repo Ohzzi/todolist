@@ -6,14 +6,7 @@ const todos = [];
 export async function createTodo(dispatch, data) {
   try {
     const response = await axios.post('/api/todo', data);
-    // TODO: HTTP 405 에러 발생
-    dispatch({
-      type: 'CREATE',
-      data: {
-        ...data,
-        id: response.data.id,
-      }
-    });
+    await fetchTodos(dispatch, data.user, data.date);
   } catch (error) {
     console.log(error);
   }
@@ -38,9 +31,7 @@ export async function fetchTodos(dispatch, user, date) {
 
 function todoReducer(state, action) {
   switch(action.type) {
-    case 'CREATE':
-      return state.concat(action.todo);
-    case 'TOGGLE': 
+    case 'TOGGLE':
       return state.map(todo =>
         todo.id === action.id ? { ...todo, isDone: !todo.isDone } : todo
       );

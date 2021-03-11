@@ -69,7 +69,7 @@ function TodoHeader() {
 
   const todos = useTodoState();
   const todoDispatch = useTodoDispatch();
-  const undoneTasks = todos.filter(todo => !todo.done);
+  const undoneTasks = todos.filter(todo => !todo.isDone);
   const userState = useUserState();
   const userDispatch = useUserDispatch();
   const dateState = useDateState();

@@ -28,4 +28,8 @@ public class TodoSaveRequestDto {
                 .user(user)
                 .build();
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
