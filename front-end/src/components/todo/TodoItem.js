@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdUpdate } from 'react-icons/md';
 import TodoUpdate from './TodoUpdate';
-import { useTodoDispatch } from '../../context/TodoContext';
+import { useTodoState, useTodoDispatch, updateTodo, completeTodo } from '../../context/TodoContext';
 
 const Done = styled.div`
   display: flex;
@@ -87,10 +87,15 @@ function TodoItem({ id, isDone, text, isImportant }) {
 
   const UpdateHandler = () => setUpdatable(!updatable);
 
-  const dispatch = useTodoDispatch();
+  const todoState = useTodoState();
+  const todoDispatch = useTodoDispatch();
 
-  const onToggle = () => dispatch({ type: 'TOGGLE', id });
-  const onRemove = () => dispatch({ type: 'REMOVE', id });
+  const onToggle = () => {
+    completeTodo(todoState, todoDispatch, id);
+  };
+  const onRemove = () => {
+    todoDispatch({ type: 'REMOVE', id });
+  };
 
   return (
     <>

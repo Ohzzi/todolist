@@ -15,7 +15,6 @@ export async function createTodo(dispatch, data) {
 export async function fetchTodos(dispatch, user, date) {
   try {
     const response = await axios(`/api/todos/${user.email}/${date}`);
-    console.log(response);
     dispatch({
       type: 'FETCH',
       data: response.data,
@@ -27,6 +26,30 @@ export async function fetchTodos(dispatch, user, date) {
       data: [],
     });
   }
+}
+
+export async function completeTodo(state, dispatch, id) {
+  dispatch({ type: 'TOGGLE', id: id });
+  const todo = getTodoById(state, id);
+  try {
+    const response = await axios.put(`/api/todo/${id}`, {
+      content: todo.content,
+      isImportant: todo.isImportant,
+      isDone: !todo.isDone
+    });
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+function getTodoById(state, id) {
+  let result;
+  state.forEach(item => {
+    if (item.id === id) {
+      result = item;
+    }
+  });
+  return result;
 }
 
 function todoReducer(state, action) {
