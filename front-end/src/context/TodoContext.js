@@ -5,7 +5,7 @@ const todos = [];
 
 export async function createTodo(dispatch, data) {
   try {
-    const response = await axios.post('/api/todo', data);
+    await axios.post('/api/todo', data);
     await fetchTodos(dispatch, data.user, data.date);
   } catch (error) {
     console.log(error);
@@ -32,7 +32,7 @@ export async function completeTodo(state, dispatch, id) {
   dispatch({ type: 'TOGGLE', id: id });
   const todo = getTodoById(state, id);
   try {
-    const response = await axios.put(`/api/todo/${id}`, {
+    await axios.put(`/api/todo/${id}`, {
       content: todo.content,
       isImportant: todo.isImportant,
       isDone: !todo.isDone
@@ -50,6 +50,16 @@ function getTodoById(state, id) {
     }
   });
   return result;
+}
+
+export async function deleteTodo(dispatch, id) {
+  dispatch({ type: 'REMOVE', id });
+  try {
+    await axios.delete(`/api/todo/${id}`);
+    console.log(response);
+  } catch(error) {
+    console.log(error);
+  }
 }
 
 function todoReducer(state, action) {

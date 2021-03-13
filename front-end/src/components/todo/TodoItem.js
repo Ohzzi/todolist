@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdUpdate } from 'react-icons/md';
 import TodoUpdate from './TodoUpdate';
-import { useTodoState, useTodoDispatch, updateTodo, completeTodo } from '../../context/TodoContext';
+import { useTodoState, useTodoDispatch, updateTodo, completeTodo, deleteTodo } from '../../context/TodoContext';
 
 const Done = styled.div`
   display: flex;
@@ -94,7 +94,7 @@ function TodoItem({ id, isDone, text, isImportant }) {
     completeTodo(todoState, todoDispatch, id);
   };
   const onRemove = () => {
-    todoDispatch({ type: 'REMOVE', id });
+    deleteTodo(todoDispatch, id);
   };
 
   return (
@@ -107,7 +107,7 @@ function TodoItem({ id, isDone, text, isImportant }) {
       <Update onClick={UpdateHandler}>
         <MdUpdate />
       </Update>
-      <Remove>
+      <Remove onClick={onRemove}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>
