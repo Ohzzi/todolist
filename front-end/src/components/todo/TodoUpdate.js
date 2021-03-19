@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+import { useTodoDispatch, updateTodo } from '../../context/TodoContext';
 
 const InsertForm = styled.form`
   background: #f8f9fa;
@@ -43,16 +44,33 @@ const ImportantBtn = styled.div`
       `}
 `;
 
-function TodoUpdate({ id, open, text, important }) {
-  const [importance, setImportance] = useState(important);
+function TodoUpdate({ id, open, text, isDone, isImportant }) {
+  const [importance, setImportance] = useState(isImportant);
+  const [value, setValue] = useState(text);
+  const [isOpen, setIsOpen] = useState(open);
 
   const importanceHandler = () => setImportance(!importance);
 
+  const dispatch = useTodoDispatch();
+
+  const onChange = e => setValue(e.target.value);
+
+  const onSubmit = e => {
+    e.preventDefault(); // 새로고침 방지
+    updateTodo(dispatch, id, {
+      content: value,
+      isDone: isDone,
+      isImportant: importance
+    });
+    setValue('');
+    setIsOpen()
+  };
+
   return (
     <>
-      {open && (
-        <InsertForm>
-          <Input autoFocus defaultValue={text} />
+      {isOpen && (
+        <InsertForm onSubmit={onSubmit}>
+          <Input autoFocus onChange={onChange} defaultValue={text} />
           <ImportantBtn onClick={importanceHandler} importance={importance}>중요</ImportantBtn>
         </InsertForm>
       )}
@@ -60,4 +78,4 @@ function TodoUpdate({ id, open, text, important }) {
   )
 }
 
-export default TodoUpdate;
+export default React.memo(TodoUpdate);

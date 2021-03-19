@@ -56,7 +56,15 @@ export async function deleteTodo(dispatch, id) {
   dispatch({ type: 'REMOVE', id });
   try {
     await axios.delete(`/api/todo/${id}`);
-    console.log(response);
+  } catch(error) {
+    console.log(error);
+  }
+}
+
+export async function updateTodo(dispatch, id, data) {
+  try {
+    await axios.put(`/api/todo/${id}`, data);
+    dispatch({ type: 'UPDATE', id: id, data: data });
   } catch(error) {
     console.log(error);
   }
@@ -72,6 +80,14 @@ function todoReducer(state, action) {
       return state.filter(todo => todo.id !== action.id);
     case 'FETCH':
       return action.data;
+    case 'UPDATE':
+      return state.map(todo => 
+        todo.id === action.id ? {
+          ...todo,
+          content: action.data.content,
+          isImportant: action.data.isImportant
+        } : todo
+      );
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

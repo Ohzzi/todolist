@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete, MdUpdate } from 'react-icons/md';
-import TodoUpdate from './TodoUpdate';
-import { useTodoState, useTodoDispatch, updateTodo, completeTodo, deleteTodo } from '../../context/TodoContext';
+import { useTodoState, useTodoDispatch, completeTodo, deleteTodo, updateTodo } from '../../context/TodoContext';
 
 const Done = styled.div`
   display: flex;
@@ -82,10 +81,58 @@ const Text = styled.div`
     `}
 `;
 
+const InsertForm = styled.form`
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 24px;
+  padding-top: 16px;
+  padding-right: 24px;
+  padding-bottom: 16px;
+
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  border-top: 1px solid #e9ecef;
+`;
+
+const Input = styled.input`
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+  width: 85%;
+  outline: none;
+  font-size: 18px;
+  box-sizing: border-box;
+`;
+
+const ImportantBtn = styled.div`
+  border-radius: 4px;
+  font-size: 18px;
+  background: #dee2e6;
+  color: white;
+  cursor: pointer;
+  padding: 12px;
+  &:hover {
+    background: #ff8787;
+  }
+  ${props =>
+    props.importance &&
+    css`
+        background: #ff6b6b;
+      `}
+`;
+
 function TodoItem({ id, isDone, text, isImportant }) {
   const [updatable, setUpdatable] = useState(false);
+  const [importance, setImportance] = useState(isImportant);
+  const [value, setValue] = useState(text);
 
-  const UpdateHandler = () => setUpdatable(!updatable);
+  const importanceHandler = () => setImportance(!importance);
+
+  const UpdateHandler = () => {
+    !isDone && setUpdatable(!updatable);
+  }
 
   const todoState = useTodoState();
   const todoDispatch = useTodoDispatch();
@@ -95,6 +142,19 @@ function TodoItem({ id, isDone, text, isImportant }) {
   };
   const onRemove = () => {
     deleteTodo(todoDispatch, id);
+  };
+
+  const onChange = e => setValue(e.target.value);
+
+  const onSubmit = e => {
+    e.preventDefault(); // 새로고침 방지
+    updateTodo(todoDispatch, id, {
+      content: value,
+      isDone: isDone,
+      isImportant: importance
+    });
+    setValue('');
+    setUpdatable(false);
   };
 
   return (
@@ -111,7 +171,12 @@ function TodoItem({ id, isDone, text, isImportant }) {
         <MdDelete />
       </Remove>
     </TodoItemBlock>
-    <TodoUpdate text={text} open={updatable}/>
+    {updatable && (
+        <InsertForm onSubmit={onSubmit}>
+          <Input autoFocus onChange={onChange} defaultValue={text} />
+          <ImportantBtn onClick={importanceHandler} importance={importance}>중요</ImportantBtn>
+        </InsertForm>
+      )}
     </>
   );
 }
