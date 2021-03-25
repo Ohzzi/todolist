@@ -91,7 +91,7 @@ function TodoHeader() {
             type: 'UPDATE_DATE',
             data: date.toJSON().substr(0,10)
           });
-          fetchTodos(todoDispatch, userState.data, date.toJSON().substr(0,10));
+          fetchTodos(todoDispatch, userState, date.toJSON().substr(0,10));
           setStartDate(date);
         }}
         customInput={<ExampleCustomInput />}
@@ -114,4 +114,4 @@ function TodoHeader() {
   );
 };
 
-export default TodoHeader;
+export default React.memo(TodoHeader);

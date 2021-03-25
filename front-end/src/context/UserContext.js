@@ -1,51 +1,20 @@
 import React, { useReducer, createContext, useContext } from 'react';
 import axios from 'axios';
 
-const initialState = {
-  loading: false,
-  data: null,
-  error: null
-};
-
-const loading = {
-  loading: true,
-  data: null,
-  error: null
-};
-
-const success = data => ({
-  loading: false,
-  data,
-  error: null
-});
-
-const error = error => ({
-  loading: false,
-  data: null,
-  error
-});
+const initialState = {};
 
 function userReducer(state, action) {
   switch (action.type) {
-    case 'GET_USER':
-      return loading;
     case 'GET_USER_SUCCESS':
-      return success(action.data);
-    case 'GET_USER_ERROR':
-      return error(action.data);
+      return action.data;
     case 'DELETE_USER':
-      return {
-        loading: false,
-        data: null,
-        error: null
-      };
+      return {};
     default:
       throw new Error(`Unhanded action type: ${action.type}`);
   }
 }
 
 export async function getUser(userDispatch, todoDispatch, dateState) {
-  userDispatch({ type: 'GET_USER' });
   try {
     const userResponse = await axios.get('/api/user');
     userDispatch({ type: 'GET_USER_SUCCESS', data: userResponse.data });
@@ -54,8 +23,10 @@ export async function getUser(userDispatch, todoDispatch, dateState) {
       type: 'FETCH',
       data: todoResponse.data
     });
-  } catch (e) {
-    userDispatch({ type: 'GET_USER_ERROR', error: e });
+  } catch (error) {
+    userDispatch({ type: 'DELETE_USER' });
+    console.error(error);
+    document.location.href = '/';
   }
 }
 

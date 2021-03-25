@@ -15,22 +15,8 @@ const GoogleLoginButton = styled.a`
   border-radius: 12px;
   margin: 12px;
   padding: 12px;
-  :active {
-    text-decoration: none;
-    color: white;
-  }
-  :link {
-    text-decoration: none;
-    color: white;
-  }
-  :visited {
-    text-decoration: none;
-    color: white;
-  }
-  :hover {
-    text-decoration: none;
-    color: white;
-  }
+  text-decoration: none;
+  color: white;
 `
 const NaverLoginButton = styled.a`
   display: block;
@@ -38,22 +24,8 @@ const NaverLoginButton = styled.a`
   border-radius: 12px;
   margin: 12px;
   padding: 12px;
-  :active {
-    text-decoration: none;
-    color: white;
-  }
-  :link {
-    text-decoration: none;
-    color: white;
-  }
-  :visited {
-    text-decoration: none;
-    color: white;
-  }
-  :hover {
-    text-decoration: none;
-    color: white;
-  }
+  text-decoration: none;
+  color: white;
 `
 
 function Login() {

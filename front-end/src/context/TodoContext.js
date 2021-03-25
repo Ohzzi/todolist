@@ -8,7 +8,7 @@ export async function createTodo(dispatch, data) {
     await axios.post('/api/todo', data);
     await fetchTodos(dispatch, data.user, data.date);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -20,7 +20,7 @@ export async function fetchTodos(dispatch, user, date) {
       data: response.data,
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     dispatch({
       type: 'FETCH',
       data: [],
@@ -38,7 +38,7 @@ export async function completeTodo(state, dispatch, id) {
       isDone: !todo.isDone
     });
   } catch(error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

@@ -117,7 +117,7 @@ function TodoCreate() {
     e.preventDefault(); // 새로고침 방지
     createTodo(dispatch, {
       content: value,
-      user: userState.data,
+      user: userState,
       date: dateState,
       isImportant: importance
     });
