@@ -148,12 +148,12 @@ function TodoItem({ id, isDone, text, isImportant }) {
 
   const onSubmit = e => {
     e.preventDefault(); // 새로고침 방지
+    console.log(value); 
     updateTodo(todoDispatch, id, {
       content: value,
       isDone: isDone,
       isImportant: importance
     });
-    setValue('');
     setUpdatable(false);
   };
 
