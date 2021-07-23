@@ -28,12 +28,10 @@ public class TodoService {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
         LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ISO_DATE);
-        List<Todo> todoList = todoRepository.findAllByUser(user);
+        List<Todo> todoList = todoRepository.findAllByUserAndDate(user, date);
         List<TodoResponseDto> result = new ArrayList<>();
         for(Todo todo:todoList) {
-            if (todo.getDate().isEqual(date)) {
-                result.add(new TodoResponseDto(todo));
-            }
+            result.add(new TodoResponseDto(todo));
         }
         return result;
     }
