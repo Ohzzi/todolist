@@ -20,7 +20,7 @@ public class TodoSaveRequestDto {
     private Boolean isImportant;
     private User user;
 
-    public Todo ToEntity() {
+    public Todo toEntity() {
         return Todo.builder()
                 .content(content)
                 .date(date)

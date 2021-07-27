@@ -47,7 +47,7 @@ public class TodoService {
         User user = userRepository.findByEmail(dto.getUser().getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("유저 정보가 존재하지 않습니다."));
         dto.setUser(user);
-        Todo todo = dto.ToEntity();
+        Todo todo = dto.toEntity();
         todo.addTodoToUser(todo.getUser());
         return todoRepository.save(todo).getId();
     }
