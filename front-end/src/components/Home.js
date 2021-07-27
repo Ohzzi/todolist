@@ -13,6 +13,7 @@ const Layout = styled.div`
   text-align: center;
   flex-direction: column;
   justify-content: space-between;
+  border: none;
 `
 
 function Home() {

@@ -36,7 +36,7 @@
 .example-custom-input {
   font-size: 36px;
   font-weight: 700;
-  color: mediumaquamarine;
+  color: cornflowerblue;
 }
 
 .react-datepicker__header {
@@ -48,15 +48,15 @@
 
 .react-datepicker__day--selected:hover {
   color: white !important;
-  background-color: mediumseagreen !important;
+  background-color: blue !important;
 }
 
 .react-datepicker__day--selected {
   color: white !important;
-  background-color: mediumaquamarine !important;
+  background-color: cornflowerblue !important;
 }
 
 .react-datepicker__day:hover, .react-datepicker__day--keyboard-selected, .react-datepicker__day--keyboard-selected:hover {
   color: white !important;
-  background-color: mediumseagreen !important;
+  background-color: blue !important;
 }

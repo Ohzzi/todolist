@@ -13,8 +13,9 @@ const Header = styled.div`
   width: 80%;
   text-align: center;
   padding: 5%;
+  color: cornflowerblue;
   .tasks-left {
-    color: #20c997;
+    color: cornflowerblue;
     font-size: 18px;
     margin-top: 20px;
     margin-right: 20px;
@@ -22,7 +23,7 @@ const Header = styled.div`
     text-align: center;
   }
   .logout {
-    color: #20c997;
+    color: cornflowerblue;
     font-size: 14px;
     margin-top: 20px;
     margin-right: 20px;

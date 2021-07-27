@@ -10,7 +10,7 @@ const Header = styled.div`
 const TextBlock = styled.div`
   font-size: 72px;
   font-weight: 700;
-  color: mediumaquamarine;
+  color: cornflowerblue;
 `
 
 function HomeHeader() {

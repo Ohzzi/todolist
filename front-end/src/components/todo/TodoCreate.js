@@ -6,12 +6,12 @@ import { useUserState } from '../../context/UserContext';
 import { useDateState } from '../../context/DateContext';
 
 const CircleButton = styled.button`
-  background: #38d9a9;
+  background: blue;
   &:hover {
     background: #63e6be;
   }
   &:active {
-    background: #20c997;
+    background: blue;
   }
 
   z-index: 5;
