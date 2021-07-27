@@ -23,6 +23,9 @@ public class TodoService {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
 
+    /**
+     * 전달받은 user 정보를 가지고 해당 user가 작성한 모든 할 일들을 가져오는 메소드
+     */
     @Transactional
     public List<TodoResponseDto> getTodoByUser(String userEmail, String dateString) {
         User user = userRepository.findByEmail(userEmail)
@@ -36,6 +39,9 @@ public class TodoService {
         return result;
     }
 
+    /**
+     * 웹 페이지에서 작성한 할 일 정보를 받아서 레포지토리에 저장하는 메소드
+     */
     @Transactional
     public Long saveTodo(TodoSaveRequestDto dto) {
         User user = userRepository.findByEmail(dto.getUser().getEmail())
@@ -46,6 +52,10 @@ public class TodoService {
         return todoRepository.save(todo).getId();
     }
 
+    /**
+     * 할 일의 번호를 가지고 정보를 가져오는 메소드. getTodoByUser 와는 다르게 user 정보가 아니라
+     * DB에 저장할 때 자동으로 부여되는 고유 id를 가지고 조회한다.
+     */
     @Transactional
     public TodoResponseDto getTodo(Long id) {
         Todo todo = todoRepository.findById(id)
@@ -53,6 +63,9 @@ public class TodoService {
         return new TodoResponseDto(todo);
     }
 
+    /**
+     * 웹 페이지에서 할 일의 내용이 수정되었을 경우 데이터베이스에 update 쿼리를 날리기 위한 메소드
+     */
     @Transactional
     public Long updateTodo(Long id, TodoUpdateRequestDto dto) {
         Todo todo = todoRepository.findById(id)
@@ -61,6 +74,9 @@ public class TodoService {
         return id;
     }
 
+    /**
+     * 웹 페이지에서 할 일 삭제 요청이 들어왔을 경우 데이터베이스에 delete 쿼리를 날리기 위한 메소드
+     */
     @Transactional
     public Long deleteTodo(Long id) {
         Todo todo = todoRepository.findById(id)
