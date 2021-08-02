@@ -39,7 +39,6 @@ const SignUp = styled.div`
 function Login() {
   return (
     <LoginBlock>
-      <LoginContent />
       <GoogleLoginButton href="/oauth2/authorization/google" role="button">Google Login</GoogleLoginButton>
       <NaverLoginButton href="/oauth2/authorization/naver" role="button">네이버로 로그인</NaverLoginButton>
       <SignUp>회원가입</SignUp>
